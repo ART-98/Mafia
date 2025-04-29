@@ -79,21 +79,23 @@ export default function CreateGamePage() {
   };
 
   return (
-    <main className="min-h-screen p-6 bg-white">
-      <h2 className="text-2xl font-bold mb-4">
+    <div className="min-h-screen p-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+      <h2 className="text-2xl font-bold mb-6">
         سلام {godName}، نقش‌ها و بازیکن‌ها رو وارد کن:
       </h2>
 
-      <div className="mb-4">
-        <label className="block mb-2 font-semibold">سناریو پیش‌فرض:</label>
+      {/* Scenario Picker */}
+      <div className="mb-6">
+        <label className="block mb-2 font-medium">سناریو پیش‌فرض:</label>
         <select
-          className="border p-2 rounded"
+          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           onChange={(e) => {
             const selected = presetScenarios.find(
               (s) => s.name === e.target.value
             );
-            if (selected)
+            if (selected) {
               setRoles(selected.roles.map((r) => ({ ...r, id: uuidv4() })));
+            }
           }}
         >
           {presetScenarios.map((s) => (
@@ -105,65 +107,75 @@ export default function CreateGamePage() {
         </select>
       </div>
 
-      <h3 className="font-semibold mt-4 mb-2">نقش‌ها:</h3>
-      <div className="space-y-2">
-        {roles.map((role, index) => (
-          <div key={role.id} className="flex flex-wrap items-center gap-2">
-            <input
-              type="text"
-              placeholder="نام نقش"
-              value={role.name}
-              onChange={(e) => updateRole(index, "name", e.target.value)}
-              className="border p-2 rounded"
-            />
-            <select
-              value={role.team}
-              onChange={(e) => updateRole(index, "team", e.target.value)}
-              className="border p-2 rounded"
-            >
-              <option value="mafia">مافیا</option>
-              <option value="citizen">شهروند</option>
-              <option value="independent">مستقل</option>
-            </select>
-            <button onClick={() => removeRole(index)} className="text-red-600">
-              حذف
-            </button>
-          </div>
-        ))}
-        <button onClick={addRole} className="text-blue-600 mt-2">
-          + نقش جدید
-        </button>
+      {/* Roles Section */}
+      <div className="mb-8">
+        <h3 className="font-semibold text-lg mb-3">نقش‌ها:</h3>
+        <div className="space-y-3">
+          {roles.map((role, index) => (
+            <div key={role.id} className="flex flex-wrap items-center gap-3">
+              <input
+                type="text"
+                placeholder="نام نقش"
+                value={role.name}
+                onChange={(e) => updateRole(index, "name", e.target.value)}
+                className="flex-1 p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              />
+              <select
+                value={role.team}
+                onChange={(e) => updateRole(index, "team", e.target.value)}
+                className="p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              >
+                <option value="mafia">مافیا</option>
+                <option value="citizen">شهروند</option>
+                <option value="independent">مستقل</option>
+              </select>
+              <button
+                onClick={() => removeRole(index)}
+                className="text-red-500 hover:text-red-700"
+              >
+                حذف
+              </button>
+            </div>
+          ))}
+          <button onClick={addRole} className="text-blue-600 hover:underline">
+            + نقش جدید
+          </button>
+        </div>
       </div>
 
-      <h3 className="font-semibold mt-6 mb-2">نام بازیکن‌ها:</h3>
-      <div className="space-y-2">
-        {players.map((player, index) => (
-          <div key={index} className="flex items-center gap-2">
-            <input
-              value={player}
-              onChange={(e) => updatePlayer(index, e.target.value)}
-              placeholder={`بازیکن ${index + 1}`}
-              className="border p-2 rounded w-64"
-            />
-            <button
-              onClick={() => removePlayer(index)}
-              className="text-red-500"
-            >
-              حذف
-            </button>
-          </div>
-        ))}
-        <button onClick={addPlayer} className="text-blue-600 mt-2">
-          + بازیکن جدید
-        </button>
+      {/* Players Section */}
+      <div className="mb-8">
+        <h3 className="font-semibold text-lg mb-3">نام بازیکن‌ها:</h3>
+        <div className="space-y-3">
+          {players.map((player, index) => (
+            <div key={index} className="flex flex-wrap items-center gap-3">
+              <input
+                value={player}
+                onChange={(e) => updatePlayer(index, e.target.value)}
+                placeholder={`بازیکن ${index + 1}`}
+                className="w-64 p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              />
+              <button
+                onClick={() => removePlayer(index)}
+                className="text-red-500 hover:text-red-700"
+              >
+                حذف
+              </button>
+            </div>
+          ))}
+          <button onClick={addPlayer} className="text-blue-600 hover:underline">
+            + بازیکن جدید
+          </button>
+        </div>
       </div>
 
+      {/* Assign Button */}
       <button
         onClick={handleAssignRoles}
-        className="mt-6 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+        className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded font-semibold transition-colors duration-300"
       >
         پخش نقش‌ها
       </button>
-    </main>
+    </div>
   );
 }
