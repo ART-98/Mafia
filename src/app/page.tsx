@@ -1,6 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import InputComponent from "./components/input/Input";
+import ButtonComponent from "./components/button/Button";
 
 export default function HomePage() {
   const [godName, setGodName] = useState("");
@@ -16,28 +18,34 @@ export default function HomePage() {
   };
 
   return (
-     <div className="flex flex-col items-center justify-center min-h-screen p-6  gap-6">
-      <div className="bg-white dark:bg-gray-800 rounded shadow p-4 w-full max-w-md text-center">
-        <h1 className="text-3xl font-bold mb-4">ورود</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 gap-6 bg-secondary text-dark dark:bg-gray-700 dark:text-light transition-colors">
+      <div className="bg-secondary border border-primary dark:bg-primary rounded shadow p-6 w-full max-w-md text-center dark:border-secondary">
+        <h1 className="text-3xl font-bold mb-4 text-primary-dark dark:text-secondary-light">
+          ورود
+        </h1>
 
-        <input
+        {/* <input
           type="text"
           placeholder="نام گاد"
           value={godName}
           onChange={(e) => setGodName(e.target.value)}
-          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 rounded border border-primary-dark dark:border-secondary bg-secondary dark:bg-primary-light text-dark dark:text-secondary placeholder:text-primary-light dark:placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
+        /> */}
+        <InputComponent
+          value={godName}
+          onChange={(e) => setGodName(e.target.value)}
+          placeholder="نام گاد"
+          className=""
+          error={error}
+          labelStyle="bg-secondary dark:bg-primary"
         />
-
-        {error && (
-          <p className="text-red-500 text-sm mt-2">{error}</p>
-        )}
-
-        <button
+        <ButtonComponent
           onClick={handleStart}
-          className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition-colors duration-300"
+          variant="primary"
+          className="mt-3"
         >
           شروع بازی
-        </button>
+        </ButtonComponent>
       </div>
     </div>
   );

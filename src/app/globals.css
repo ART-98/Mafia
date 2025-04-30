@@ -2,12 +2,36 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --breakpoint-2xs: 320px;
+  --breakpoint-xs: 480px;
 
-:root {
-  --dark: #f0f0f0;
-  --light: #1a1a1a;
+  /* Light mode (default) */
+  --color-light: #f8fafc;
+  --color-dark: #1f2937;
+
+  /* --color-primary: #B85042;
+  --color-primary-light: #c27167;
+  --color-primary-dark: #c0402f;
+  --color-secondary: #E7E8D1;
+  --color-secondary-light: #E7E8D1;
+  --color-secondary-dark: #d8dba1; */
+  --color-primary: #b85042;
+  --color-primary-light: #c27167;
+  --color-primary-dark: #c0402f;
+  --color-secondary: #fbe9d0;
+  --color-secondary-light: #eee3d4;
+  --color-secondary-dark: #f5dbb6;
+
+  --color-accent: #16a34a;
+  --color-error: #dc2626;
 }
 
+body {
+  background-color: #f7dfbd;
+}
+
+/* 
 @theme inline {
   --color-dark: var(--dark);
   --color-light: var(--light);
@@ -20,46 +44,49 @@
     --dark: #0a0a0a;
     --light: #ededed;
   }
-}
-
-/* iran sans */
-/* 
-@font-face {
-    font-family: "iran-sans";
-    src: url("/fonts/IRANSans/IRANSansX-Medium.ttf");
-    font-style: normal;
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: "iran-sans";
-    src: url("/fonts/IRANSans/IRANSansX-Bold.ttf");
-    font-style: normal;
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "iran-sans";
-    src: url("/fonts/IRANSans/IRANSansX-Light.ttf");
-    font-style: normal;
-    font-weight: 300;
-}
-
-@font-face {
-    font-family: "iran-sans";
-    src: url("/fonts/IRANSans/IRANSansX-Regular.ttf");
-    font-style: normal;
 } */
 
+/* iran sans */
 
-
-
-body {
-  background: var(--dark);
-  color: var(--light);
+@font-face {
+  font-family: "iran-sans";
+  src: url("/fonts/IRANSans/IRANSansX-Medium.ttf");
+  font-style: normal;
+  font-weight: 500;
 }
 
+@font-face {
+  font-family: "iran-sans";
+  src: url("/fonts/IRANSans/IRANSansX-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
 
-html, body {
+@font-face {
+  font-family: "iran-sans";
+  src: url("/fonts/IRANSans/IRANSansX-Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "iran-sans";
+  src: url("/fonts/IRANSans/IRANSansX-Regular.ttf");
+  font-style: normal;
+}
+
+html,
+body {
   transition: background-color 0.5s, color 0.5s;
 }
+body,
+body * {
+  font-family: "iran-sans" !important;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+

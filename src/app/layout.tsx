@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import Header from "@/components/header";
+import Header from "./components/header/Header";
+import Providers from "./providers/providers";
 
 const iranSans = localFont({
   src: [
@@ -41,10 +42,12 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={`${iranSans.className}`}>
-        <Header />
-        <main className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-          {children}
-        </main>
+        <Providers>
+          <Header />
+          <main className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

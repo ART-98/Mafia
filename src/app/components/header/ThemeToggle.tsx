@@ -6,12 +6,12 @@ export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // On mount, check local storage or system preference
     const saved = localStorage.getItem("theme");
-    if (
-      saved === "dark" ||
-      (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    if (saved === "dark" || (!saved && prefersDark)) {
       document.documentElement.classList.add("dark");
       setIsDark(true);
     } else {
@@ -30,9 +30,10 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded bg-light dark:bg-dark text-sm"
+      aria-label="Toggle theme"
+      className="p-2 rounded-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 shadow hover:scale-105 transition-transform"
     >
-      {isDark ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      {isDark ? "☀️" : "🌙"}
     </button>
   );
 }
