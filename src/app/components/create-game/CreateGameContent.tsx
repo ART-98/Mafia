@@ -77,7 +77,12 @@ export default function CreateGameContent() {
       name,
       role: shuffledRoles[index],
     }));
+    // 🟡 NEW: Select random starter
+    const randomStarter = result[Math.floor(Math.random() * result.length)];
+
+    // Save both assigned players and the starter ID
     localStorage.setItem("assignedPlayers", JSON.stringify(result));
+    localStorage.setItem("starterId", randomStarter.id);
     router.push("/reveal");
   };
 

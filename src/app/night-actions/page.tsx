@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SelectOptoin from "../components/select-option/SelectOptoin";
 import ButtonComponent from "../components/button/Button";
+import Timer from "../components/timer/Timer";
 
 interface Player {
   id: string;
@@ -29,11 +30,16 @@ export default function NightActionsPage() {
   const [currentActions, setCurrentActions] = useState<NightAction[]>([]);
   const [nightNumber, setNightNumber] = useState(1);
   const [selectedNight, setSelectedNight] = useState(1);
+  const [starterId, setStarterId] = useState<string | null>(null);
 
   useEffect(() => {
     const assigned = localStorage.getItem("assignedPlayers");
     const storedMap = localStorage.getItem("nightActionsMap");
     const storedNight = parseInt(localStorage.getItem("nightNumber") || "1");
+    const starter = localStorage.getItem("starterId");
+    if (starter) {
+      setStarterId(starter);
+    }
 
     if (assigned) setPlayers(JSON.parse(assigned));
     if (storedMap) setNightActionsMap(JSON.parse(storedMap));
@@ -97,9 +103,26 @@ export default function NightActionsPage() {
 
   const uniqueRoles = Array.from(new Set(players.map((p) => p.role.name)));
 
+   const handleTimeUp = () => {
+     alert("تایمر به پایان رسید!");
+   };
+
   return (
     <div className="min-h-screen bg-secondary dark:bg-gray-700 p-6 text-primary dark:text-secondary transition-colors duration-300">
       <div className="max-w-3xl mx-auto space-y-6">
+        {starterId && (
+          <div className="mb-4 text-green-700 dark:text-green-300 font-semibold">
+            بازیکن شروع‌کننده :{" "}
+            {players.find((p) => p.id === starterId)?.name || "نامشخص"}
+          </div>
+        )}
+        <div className="bg-secondary dark:bg-gray-700 text-primary dark:text-secondary transition-colors duration-300">
+          {/* Other sections */}
+
+          <Timer onTimeUp={handleTimeUp} />
+
+          {/* Other sections */}
+        </div>
         {/* Header */}
         <header className="space-y-2">
           <h1 className="text-2xl font-bold">ثبت اقدامات شب</h1>
@@ -132,7 +155,7 @@ export default function NightActionsPage() {
                 className="bg-secondary-dark dark:bg-gray-800 p-4 rounded-lg shadow"
               >
                 <label className="block mb-2 font-semibold">
-                  {roleName} روی چه کسی اقدام کرد؟
+                  {roleName}  روی چه کسی اقدام کرد؟
                 </label>
                 <SelectOptoin
                   value={currentValue}
