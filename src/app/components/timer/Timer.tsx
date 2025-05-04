@@ -12,7 +12,7 @@ const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const timeOptions = [30, 45, 60, 90, 180];
+  const timeOptions = [30, 45, 60, 180];
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -51,7 +51,7 @@ const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
   return (
     <div className="bg-secondary-dark dark:bg-gray-800 p-4 rounded-lg shadow">
       <h2 className="font-semibold text-lg mb-4">انتخاب تایمر</h2>
-      <div className="flex gap-4 mb-4">
+      <div className="flex gap-3 mb-4">
         {timeOptions.map((time) => (
           <ButtonComponent
             key={time}

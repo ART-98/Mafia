@@ -103,9 +103,9 @@ export default function NightActionsPage() {
 
   const uniqueRoles = Array.from(new Set(players.map((p) => p.role.name)));
 
-   const handleTimeUp = () => {
-     alert("تایمر به پایان رسید!");
-   };
+  const handleTimeUp = () => {
+    alert("تایمر به پایان رسید!");
+  };
 
   return (
     <div className="min-h-screen bg-secondary dark:bg-gray-700 p-6 text-primary dark:text-secondary transition-colors duration-300">
@@ -117,7 +117,7 @@ export default function NightActionsPage() {
           </div>
         )}
         <div className="bg-secondary dark:bg-gray-700 text-primary dark:text-secondary transition-colors duration-300">
-          {/* Other sections */}
+          {/* timer sections */}
 
           <Timer onTimeUp={handleTimeUp} />
 
@@ -148,28 +148,33 @@ export default function NightActionsPage() {
             const currentValue =
               currentActions.find((a) => a.roleName === roleName)?.targetId ||
               "";
-
             return (
               <div
                 key={roleName}
                 className="bg-secondary-dark dark:bg-gray-800 p-4 rounded-lg shadow"
               >
-                <label className="block mb-2 font-semibold">
-                  {roleName}  روی چه کسی اقدام کرد؟
-                </label>
-                <SelectOptoin
-                  value={currentValue}
-                  onChange={(targetId) =>
-                    handleActionChange(roleName, targetId)
-                  }
-                  options={[
-                    { value: "", label: "انتخاب بازیکن" },
-                    ...players.map((p) => ({
-                      value: p.id,
-                      label: p.name,
-                    })),
-                  ]}
-                />
+                {players
+                  .filter((p) => p.role.name === roleName)
+                  .map((p) => (
+                    <div key={p.id} className="mb-2">
+                      <label className="block font-semibold">
+                        {roleName} - {p.name} روی چه کسی اقدام کرد?
+                      </label>
+                      <SelectOptoin
+                        value={currentValue}
+                        onChange={(targetId) =>
+                          handleActionChange(roleName, targetId)
+                        }
+                        options={[
+                          { value: "", label: "انتخاب بازیکن" },
+                          ...players.map((p) => ({
+                            value: p.id,
+                            label: `${p.name} - ${p.role.name} `,
+                          })),
+                        ]}
+                      />
+                    </div>
+                  ))}
               </div>
             );
           })}
@@ -201,10 +206,10 @@ export default function NightActionsPage() {
                     <span className="font-semibold">{action.roleName}</span>
                     {actor ? ` (${actor.name})` : ""} هدف قرار داد :{" "}
                     <svg
-                      width="24px"
-                      height="24px"
+                      width="20px"
+                      height="20px"
                       viewBox="0 0 24 24"
-                      strokeWidth="2"
+                      strokeWidth="1.5"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                       color="currentColor"
@@ -213,12 +218,12 @@ export default function NightActionsPage() {
                       <path
                         d="M21 12L3 12M3 12L11.5 3.5M3 12L11.5 20.5"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       ></path>
                     </svg>
-                    <span className="font-bold text-base">
+                    <span className="font-bold">
                       {target?.name || "نامشخص"}
                     </span>
                   </div>
