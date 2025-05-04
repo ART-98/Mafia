@@ -11,7 +11,7 @@ const Timer: React.FC<TimerProps> = ({}) => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const timeOptions = [3, 45, 60, 180];
+  const timeOptions = [30, 45, 60, 180];
 
 
  useEffect(() => {
