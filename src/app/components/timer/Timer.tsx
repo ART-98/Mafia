@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ButtonComponent from "../../components/button/Button";
 import toast from "react-hot-toast";
 
@@ -13,39 +13,52 @@ const Timer: React.FC<TimerProps> = ({}) => {
 
   const timeOptions = [30, 45, 60, 180];
 
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null);
+  const hasPlayedSoundRef = useRef(false);
 
- useEffect(() => {
-   let timer: NodeJS.Timeout | null = null;
+  useEffect(() => {
+    alarmAudioRef.current = new Audio("/sounds/alarm.mp3");
+  }, []);
 
-   const handleTimeUp = () => {
-     toast.error("تایمر به پایان رسید!");
-   };
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
 
-   if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
-     timer = setInterval(() => {
-       setTimeLeft((prevTime) => {
-         if (prevTime === null) return null;
-         const newTime = prevTime - 1;
-         if (newTime <= 0) {
-           handleTimeUp();
-           clearInterval(timer!);
-           return 0;
-         }
-         return newTime;
-       });
-     }, 1000);
-   } else if (!isTimerRunning && timeLeft !== null && timeLeft > 0) {
-     clearInterval(timer!);
-   }
+    if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime === null) return null;
+          const newTime = prevTime - 1;
 
-   return () => clearInterval(timer!);
- }, [isTimerRunning, timeLeft]);
+          if (newTime <= 3 && !hasPlayedSoundRef.current) {
+            hasPlayedSoundRef.current = true;
+            if (alarmAudioRef.current) {
+              alarmAudioRef.current.play().catch((err) => {
+                console.error("Failed to play alarm:", err);
+              });
+            }
+          }
 
+          if (newTime <= 0) {
+            toast.error("تایمر به پایان رسید!");
+            clearInterval(timer!);
+            return 0;
+          }
+
+          return newTime;
+        });
+      }, 1000);
+    } else if (!isTimerRunning && timeLeft !== null && timeLeft > 0) {
+      clearInterval(timer!);
+    }
+
+    return () => clearInterval(timer!);
+  }, [isTimerRunning, timeLeft]);
 
   const handleTimeSelect = (time: number) => {
     setSelectedTime(time);
     setTimeLeft(time);
     setIsTimerRunning(true);
+    hasPlayedSoundRef.current = false;
   };
 
   const handleStopTimer = () => {
