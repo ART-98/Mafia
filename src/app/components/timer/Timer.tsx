@@ -2,40 +2,45 @@
 
 import { useState, useEffect } from "react";
 import ButtonComponent from "../../components/button/Button";
+import toast from "react-hot-toast";
 
-interface TimerProps {
-  onTimeUp: () => void;
-}
+interface TimerProps {}
 
-const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
+const Timer: React.FC<TimerProps> = ({}) => {
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const timeOptions = [30, 45, 60, 180];
+  const timeOptions = [3, 45, 60, 180];
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
 
-    if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prevTime) => {
-          if (prevTime === null) return null;
-          const newTime = prevTime - 1;
-          if (newTime <= 0) {
-            onTimeUp();
-            clearInterval(timer!);
-            return 0;
-          }
-          return newTime;
-        });
-      }, 1000);
-    } else if (!isTimerRunning && timeLeft !== null && timeLeft > 0) {
-      clearInterval(timer!);
-    }
+ useEffect(() => {
+   let timer: NodeJS.Timeout | null = null;
 
-    return () => clearInterval(timer!);
-  }, [isTimerRunning, timeLeft, onTimeUp]);
+   const handleTimeUp = () => {
+     toast.error("تایمر به پایان رسید!");
+   };
+
+   if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
+     timer = setInterval(() => {
+       setTimeLeft((prevTime) => {
+         if (prevTime === null) return null;
+         const newTime = prevTime - 1;
+         if (newTime <= 0) {
+           handleTimeUp();
+           clearInterval(timer!);
+           return 0;
+         }
+         return newTime;
+       });
+     }, 1000);
+   } else if (!isTimerRunning && timeLeft !== null && timeLeft > 0) {
+     clearInterval(timer!);
+   }
+
+   return () => clearInterval(timer!);
+ }, [isTimerRunning, timeLeft]);
+
 
   const handleTimeSelect = (time: number) => {
     setSelectedTime(time);
@@ -65,7 +70,8 @@ const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
 
       {isTimerRunning && timeLeft !== null && (
         <div className="font-semibold text-xl">
-          تایمر : <strong className="text-error">{timeLeft} ثانیه</strong>
+          تایمر :{" "}
+          <strong className="text-error animate-pulse">{timeLeft} ثانیه</strong>
         </div>
       )}
 

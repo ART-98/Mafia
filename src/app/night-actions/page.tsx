@@ -103,10 +103,7 @@ export default function NightActionsPage() {
 
   const uniqueRoles = Array.from(new Set(players.map((p) => p.role.name)));
 
-  const handleTimeUp = () => {
-    alert("تایمر به پایان رسید!");
-  };
-
+  
   return (
     <div className="min-h-screen bg-secondary dark:bg-gray-700 p-6 text-primary dark:text-secondary transition-colors duration-300">
       <div className="max-w-3xl mx-auto space-y-6">
@@ -119,7 +116,7 @@ export default function NightActionsPage() {
         <div className="bg-secondary dark:bg-gray-700 text-primary dark:text-secondary transition-colors duration-300">
           {/* timer sections */}
 
-          <Timer onTimeUp={handleTimeUp} />
+          <Timer />
 
           {/* Other sections */}
         </div>
