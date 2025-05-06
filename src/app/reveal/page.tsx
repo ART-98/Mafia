@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import ButtonComponent from "../components/button/Button";
+import Image from "next/image";
 
 interface AssignedPlayer {
   id: string;
@@ -55,6 +56,17 @@ export default function RevealPage() {
         </ButtonComponent>
       ) : (
         <div className="bg-secondary-dark dark:bg-primary rounded-xl p-6 shadow-lg w-full max-w-sm text-center space-y-4 transition-colors">
+          <div>
+            <Image
+              src={`/images/roles/${current.role.name}.jpg`}
+              // src={`/images/Gemini_Generated_Image_282f12282f12282f.jpg`}
+              alt={current.role.name}
+              width={200}
+              height={200}
+              className="mx-auto mb-4 rounded-full shadow-lg transition-transform transform hover:scale-105"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
           <p className="text-lg">
             نام بازیکن : <strong>{current.name}</strong>
           </p>
