@@ -14,17 +14,19 @@ const presetScenarios = [
       { id: uuidv4(), name: "دکتر", team: "شهروند" },
       { id: uuidv4(), name: "کارآگاه", team: "شهروند" },
       { id: uuidv4(), name: "مافیا ساده", team: "مافیا" },
+      { id: uuidv4(), name: "شهروند ساده", team: "شهروند" },
     ],
   },
   {
     name: "پیشرفته",
     roles: [
       { id: uuidv4(), name: "پدرخوانده", team: "مافیا" },
-      { id: uuidv4(), name: "ناتاشا", team: "مافیا" },
+      { id: uuidv4(), name: "ماتادور", team: "مافیا" },
       { id: uuidv4(), name: "دکتر", team: "شهروند" },
       { id: uuidv4(), name: "کارآگاه", team: "شهروند" },
-      { id: uuidv4(), name: "روانشناس", team: "شهروند" },
-      { id: uuidv4(), name: "تک‌تیرانداز", team: "مستقل" },
+      { id: uuidv4(), name: "مظنون", team: "شهروند" },
+      { id: uuidv4(), name: "لئون", team: "شهروند" },
+      { id: uuidv4(), name: "شهروند ساده", team: "شهروند" },
     ],
   },
 ];
