@@ -41,12 +41,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${iranSans.className}`}>
+      <body
+        className={`${iranSans.className}  bg-secondary text-gray-700 dark:bg-gray-700 dark:text-secondary transition-colors duration-500 overflow-x-hidden`}
+      >
         <Providers>
           <Header />
-          <main className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-            {children}
-          </main>
+          <main className="max-w-6xl mx-auto p-4">{children}</main>
         </Providers>
       </body>
     </html>

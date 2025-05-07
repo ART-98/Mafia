@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <header className="bg-secondary-dark dark:bg-gray-800 text-gray-900 dark:text-white p-4 shadow-md">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-4">
         {/* Time & Date */}
         <div className="flex gap-3 text-sm sm:text-base font-medium text-dark dark:text-light">
           <span>{time || "..."}</span>

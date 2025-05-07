@@ -104,8 +104,8 @@ export default function NightActionsPage() {
   const uniqueRoles = Array.from(new Set(players.map((p) => p.role.name)));
 
   return (
-    <div className="min-h-screen bg-secondary dark:bg-gray-700 p-6 text-primary dark:text-secondary transition-colors duration-300">
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="min-h-screen bg-secondary dark:bg-gray-700 text-primary dark:text-secondary transition-colors duration-300">
+      <div className="mx-auto space-y-6">
         {starterId && (
           <div className="mb-4 text-green-700 dark:text-green-300 font-semibold">
             بازیکن شروع‌کننده :{" "}
@@ -154,7 +154,7 @@ export default function NightActionsPage() {
                   .map((p) => (
                     <div key={p.id} className="mb-2">
                       <label className="block font-semibold mb-2">
-                        {roleName} - ({ p.name }) روی چه کسی اقدام کرد ؟
+                        {roleName} - ({p.name}) روی چه کسی اقدام کرد ؟
                       </label>
                       <SelectOptoin
                         value={currentValue}
