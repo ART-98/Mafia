@@ -235,3 +235,198 @@ export default function CreateGameContent() {
     </div>
   );
 }
+
+
+// "use client";
+// import { useState } from "react";
+// import { useRouter, useSearchParams } from "next/navigation";
+// import { v4 as uuidv4 } from "uuid";
+// import ButtonComponent from "../../components/button/Button";
+// import InputComponent from "../../components/input/Input";
+
+// const teams = ["مافیا", "شهروند", "مستقل"];
+
+// type Role = {
+//   id: string;
+//   name: string;
+//   team: string;
+//   selected: boolean;
+// };
+
+// const presetRoles: Role[] = [
+//   { id: uuidv4(), name: "پدرخوانده", team: "مافیا", selected: true },
+//   { id: uuidv4(), name: "مافیا ساده", team: "مافیا", selected: true },
+//   { id: uuidv4(), name: "دکتر", team: "شهروند", selected: true },
+//   { id: uuidv4(), name: "کارآگاه", team: "شهروند", selected: true },
+//   { id: uuidv4(), name: "شهروند ساده", team: "شهروند", selected: true },
+// ];
+
+// export default function CreateGameContent() {
+//   const router = useRouter();
+//   const searchParams = useSearchParams();
+//   const godName = searchParams.get("god") || "گاد";
+
+//   const [roles, setRoles] = useState<Role[]>(presetRoles);
+//   const [players, setPlayers] = useState<string[]>([""]);
+//   const [newRoleName, setNewRoleName] = useState("");
+//   const [newRoleTeam, setNewRoleTeam] = useState(teams[0]);
+
+//   const toggleRole = (id: string) => {
+//     setRoles((prev) =>
+//       prev.map((r) => (r.id === id ? { ...r, selected: !r.selected } : r))
+//     );
+//   };
+
+//   const addCustomRole = () => {
+//     if (!newRoleName.trim()) return;
+//     setRoles([
+//       ...roles,
+//       {
+//         id: uuidv4(),
+//         name: newRoleName.trim(),
+//         team: newRoleTeam,
+//         selected: true,
+//       },
+//     ]);
+//     setNewRoleName("");
+//   };
+
+//   const addPlayer = () => setPlayers([...players, ""]);
+//   const updatePlayer = (index: number, name: string) => {
+//     const updated = [...players];
+//     updated[index] = name;
+//     setPlayers(updated);
+//   };
+//   const removePlayer = (index: number) => {
+//     const updated = [...players];
+//     updated.splice(index, 1);
+//     setPlayers(updated);
+//   };
+
+//   const handleAssign = () => {
+//     const validPlayers = players.filter((p) => p.trim());
+//     const selectedRoles = roles.filter((r) => r.selected);
+//     if (validPlayers.length !== selectedRoles.length) {
+//       alert("تعداد بازیکنان باید با تعداد نقش‌های انتخاب‌شده برابر باشد.");
+//       return;
+//     }
+
+//     const shuffledRoles = [...selectedRoles].sort(() => Math.random() - 0.5);
+//     const assigned = validPlayers.map((name, i) => ({
+//       id: uuidv4(),
+//       name,
+//       role: shuffledRoles[i],
+//     }));
+
+//     const starter = assigned[Math.floor(Math.random() * assigned.length)];
+//     localStorage.setItem("assignedPlayers", JSON.stringify(assigned));
+//     localStorage.setItem("starterId", starter.id);
+//     router.push("/reveal");
+//   };
+
+//   return (
+//     <div className="min-h-screen p-6 bg-secondary text-dark dark:bg-gray-700 dark:text-light transition-colors duration-500">
+//       <h2 className="text-xl font-bold mb-6 text-primary-dark dark:text-primary-light">
+//         سلام {godName}، نقش‌ها و بازیکن‌ها رو وارد کن :
+//       </h2>
+
+//       {/* Roles By Team */}
+//       <div className="mb-10">
+//         {teams.map((team) => (
+//           <div key={team} className="mb-6">
+//             <h3 className="text-lg font-bold mb-2 text-primary dark:text-primary-light">
+//               {team}
+//             </h3>
+//             <div className="flex flex-wrap gap-2">
+//               {roles
+//                 .filter((r) => r.team === team)
+//                 .map((role) => (
+//                   <button
+//                     key={role.id}
+//                     onClick={() => toggleRole(role.id)}
+//                     className={`px-3 py-1 rounded-full border transition-all duration-300 text-sm ${
+//                       role.selected
+//                         ? "bg-primary text-white border-primary"
+//                         : "bg-transparent text-primary border-primary hover:bg-primary/10"
+//                     }`}
+//                   >
+//                     {role.name}
+//                   </button>
+//                 ))}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Add Custom Role */}
+//       <div className="mb-10">
+//         <h3 className="font-semibold mb-2 text-primary dark:text-secondary-light">
+//           نقش دلخواه :
+//         </h3>
+//         <div className="flex flex-wrap items-center gap-3">
+//           <InputComponent
+//             value={newRoleName}
+//             onChange={(e) => setNewRoleName(e.target.value)}
+//             placeholder="نام نقش جدید"
+//             className="w-64"
+//             labelStyle="bg-secondary dark:bg-gray-700"
+//           />
+//           <select
+//             value={newRoleTeam}
+//             onChange={(e) => setNewRoleTeam(e.target.value)}
+//             className="px-3 py-2 border rounded-md bg-secondary dark:bg-gray-700"
+//           >
+//             {teams.map((team) => (
+//               <option key={team} value={team}>
+//                 {team}
+//               </option>
+//             ))}
+//           </select>
+//           <button
+//             onClick={addCustomRole}
+//             className="px-4 py-2 text-sm rounded-md border border-primary text-primary hover:bg-primary/10"
+//           >
+//             افزودن نقش
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Players */}
+//       <div className="mb-10">
+//         <h3 className="font-semibold mb-2 text-primary dark:text-secondary-light">
+//           نام بازیکن‌ها:
+//         </h3>
+//         <div className="space-y-3">
+//           {players.map((player, index) => (
+//             <div key={index} className="flex flex-wrap items-center gap-3">
+//               <InputComponent
+//                 value={player}
+//                 onChange={(e) => updatePlayer(index, e.target.value)}
+//                 placeholder={`بازیکن ${index + 1}`}
+//                 className="w-64"
+//                 labelStyle="bg-secondary dark:bg-gray-700"
+//               />
+//               <button
+//                 onClick={() => removePlayer(index)}
+//                 className="text-error hover:text-error"
+//               >
+//                 حذف
+//               </button>
+//             </div>
+//           ))}
+//           <button
+//             onClick={addPlayer}
+//             className="text-primary dark:text-secondary hover:underline border px-2 py-1 rounded-md"
+//           >
+//             + بازیکن جدید
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Submit */}
+//       <ButtonComponent onClick={handleAssign} variant="primary">
+//         پخش نقش‌ها
+//       </ButtonComponent>
+//     </div>
+//   );
+// }
